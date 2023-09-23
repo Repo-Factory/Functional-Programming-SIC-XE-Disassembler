@@ -47,7 +47,7 @@ std::ostream& operator<<(std::ostream& stream, const Indexed wrapper)
 std::ostream& operator<<(std::ostream& stream, const Output output)
 {
     if (output.format == AddressingFormat::Format2) {
-        return stream << output.opCode << "      " << output.format << "              " << output.objectCode;
+        return stream << output.opCode << "      " << output.format << "              " << output.objectCode << std::endl;
     } 
     else {
         return stream << output.opCode << "      " << output.format << "      " << output.addresingMode << "      " << 

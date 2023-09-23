@@ -48,9 +48,9 @@ int main(int argc, char* argv[])
     std::ofstream outputFile(OUTPUT_FILE_NAME);                 
     FileHandling::print_column_names(outputFile);
     const std::function<int(int)> recurseTextSection ([&](int textBytes) {  // While there are still bytes, extract them, else close files and exit
-        if (STILL_MORE_BYTES(textBytes)) 
-            return recurseTextSection(textBytes - extractInfoToOutput(inputFile, outputFile, std::unique_ptr<Parser>(new Parser())));
-        return FileHandling::close(inputFile, outputFile);
+        return STILL_MORE_BYTES(textBytes) ?
+            recurseTextSection(textBytes - extractInfoToOutput(inputFile, outputFile, std::unique_ptr<Parser>(new Parser()))) :
+            FileHandling::close(inputFile, outputFile);
     ;});
     return recurseTextSection(FileHandling::locateTextSection(inputFile));  // Here we will actually call our lambda, which will execute bulk of program
 }
