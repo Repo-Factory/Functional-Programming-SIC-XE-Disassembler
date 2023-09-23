@@ -52,5 +52,5 @@ int main(int argc, char* argv[])
             recurseTextSection(textBytes - extractInfoToOutput(inputFile, outputFile, std::unique_ptr<Parser>(new Parser()))) :
             FileHandling::close(inputFile, outputFile);
     ;});
-    return recurseTextSection(FileHandling::locateTextSection(inputFile));  // Here we will actually call our lambda, which will execute bulk of program
+    while (!inputFile.eof()) recurseTextSection(FileHandling::locateTextSection(inputFile));  // Here we will actually call our lambda, which will execute bulk of program
 }
