@@ -53,4 +53,5 @@ int main(int argc, char* argv[])
             FileHandling::close(inputFile, outputFile);
     ;});
     while (!inputFile.eof()) recurseTextSection(FileHandling::locateTextSection(inputFile));  // Here we will actually call our lambda, which will execute bulk of program
+    return EXIT_SUCCESS;
 }

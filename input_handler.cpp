@@ -72,7 +72,7 @@ std::string FileHandling::readInBytes(std::ifstream& stream, int numBytes, bool 
 int FileHandling::locateTextSection(std::ifstream& stream)
 {
     while (stream.peek() != TEXT_SECTION_IDENTIFIER && !stream.eof())    // Read in lines until we see T
-        readInChar(stream);
+        readInLine(stream);
     readInChar(stream);                                 // Grab 'T'
     readInBytes(stream, NUM_ADDRESS_DESCRIPTION_BYTES); // Read in 3 descriptor bytes
     return convertStringToHex(readInByte(stream));      // Read in next byte and return the size it indicates
