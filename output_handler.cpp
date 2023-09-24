@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& stream, const AddressingMode addressingMo
         case AddressingMode::Immediate: return stream << "Immediate"; break;
         case AddressingMode::Indirect:  return stream << "Indirect";  break;
     }
-    return stream;
+    return stream << "Simple";
 }
 
 std::ostream& operator<<(std::ostream& stream, const TargetAddressMode targetAddressMode)
