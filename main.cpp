@@ -50,7 +50,9 @@ int main(int argc, char* argv[])
     const std::function<int(int)> recurseTextSection ([&](int textBytes) {  // While there are still bytes, extract them, else close files and exit
         return STILL_MORE_BYTES(textBytes) ?
             recurseTextSection(textBytes - extractInfoToOutput(inputFile, outputFile, std::unique_ptr<Parser>(new Parser()))) :
-            FileHandling::close(inputFile, outputFile);
+            // FileHandling::close(inputFile, outputFile);
+            1
     ;});
-    while (!inputFile.eof()) recurseTextSection(FileHandling::locateTextSection(inputFile));  // Here we will actually call our lambda, which will execute bulk of program
+    while (!inputFile.eof()) recurseTextSection(FileHandling::locateTextSection(inputFile));
+    FileHandling::close(inputFile, outputFile);  // Here we will actually call our lambda, which will execute bulk of program
 }

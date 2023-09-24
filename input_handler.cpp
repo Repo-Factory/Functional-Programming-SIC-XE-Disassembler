@@ -82,16 +82,6 @@ int FileHandling::locateTextSection(std::ifstream& stream)
     // This will place you at beginning of instructions
 }
 
-int FileHandling::afterLocateTextSection(std::ifstream& stream)
-{
-    while (stream.peek() != TEXT_SECTION_IDENTIFIER && !stream.eof())    // Read in lines until we see T
-        readInChar(stream);
-    readInChar(stream);                                 // Grab 'T'
-    readInBytes(stream, NUM_ADDRESS_DESCRIPTION_BYTES); // Read in 3 descriptor bytes
-    return convertStringToHex(readInByte(stream));      // Read in next byte and return the size it indicates
-    // This will place you at beginning of instructions
-}
-
 int FileHandling::close(std::ifstream& inputFile, std::ofstream& outputFile)
 {
     inputFile.close();
