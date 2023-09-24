@@ -20,20 +20,35 @@ std::ostream& FileHandling::print_column_names(std::ofstream& stream)
 /* Static casting our enums will give us a value we can corresponding to array index to print appropriate string  */
 std::ostream& operator<<(std::ostream& stream, const AddressingMode addressingMode)
 {
-    std::vector<std::string> modesStrings = std::vector<std::string>{"Immediate", "Indirect", "Simple"};
-    return stream << modesStrings[static_cast<int>(addressingMode)-ADDRESSING_MODE_ENUM_DISPLACEMENT];
+    switch (addressingMode)
+    {
+        case AddressingMode::Simple:    return stream << "Simple";    break;
+        case AddressingMode::Immediate: return stream << "Immediate"; break;
+        case AddressingMode::Indirect:  return stream << "Indirect";  break;
+    }
+    return stream;
 }
 
 std::ostream& operator<<(std::ostream& stream, const TargetAddressMode targetAddressMode)
 {
-    std::vector<std::string> targetAddressModeStrings = std::vector<std::string>{"Absolute", "PC", "Base"};
-    return stream << targetAddressModeStrings[static_cast<int>(targetAddressMode)];
+    switch (targetAddressMode)
+    {
+        case TargetAddressMode::Absolute: return stream << "Absolute"; break;
+        case TargetAddressMode::Base:     return stream << "Base";     break;
+        case TargetAddressMode::PC:       return stream << "PC";       break;
+    }
+    return stream;
 }
 
 std::ostream& operator<<(std::ostream& stream, const AddressingFormat instructionFormat)
 {
-    std::vector<std::string> instructionFormatStrings = std::vector<std::string>{"2", "3", "4"};
-    return stream << instructionFormatStrings[(static_cast<int>(instructionFormat))-FORMAT_ENUM_DISPLACEMENT];
+    switch (instructionFormat)
+    {
+        case AddressingFormat::Format2: return stream << "2"; break;
+        case AddressingFormat::Format3: return stream << "3"; break;
+        case AddressingFormat::Format4: return stream << "4"; break;
+    }
+    return stream;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
