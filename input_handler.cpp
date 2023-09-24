@@ -74,7 +74,7 @@ std::string FileHandling::readInBytes(std::ifstream& stream, int numBytes, bool 
 /* Looks for T section and grabs in description Bytes. Then we output the size in bytes of our text section to be used later to know how long to iterate */
 int FileHandling::locateTextSection(std::ifstream& stream)
 {
-    while (stream.peek() != TEXT_SECTION_IDENTIFIER)    // Read in lines until we see T
+    while (stream.peek() != TEXT_SECTION_IDENTIFIER && !stream.eof())    // Read in lines until we see T
         readInLine(stream);
     readInChar(stream);                                 // Grab 'T'
     readInBytes(stream, NUM_ADDRESS_DESCRIPTION_BYTES); // Read in 3 descriptor bytes
