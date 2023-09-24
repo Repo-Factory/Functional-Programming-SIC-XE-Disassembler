@@ -52,5 +52,5 @@ int main(int argc, char* argv[])
         if (STILL_MORE_BYTES(textBytes)) recurseTextSection(textBytes-extractInfoToOutput(inputFile, outputFile, parser));
     });
     while (!inputFile.eof()) recurseTextSection(FileHandling::locateTextSection(inputFile));
-    FileHandling::close(inputFile, outputFile);  // Here we will actually call our lambda, which will execute bulk of program
+    return FileHandling::close(inputFile, outputFile);  // Here we will actually call our lambda, which will execute bulk of program
 }
