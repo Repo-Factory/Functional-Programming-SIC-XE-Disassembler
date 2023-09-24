@@ -48,9 +48,9 @@ int main(int argc, char* argv[])
     std::ofstream outputFile(OUTPUT_FILE_NAME);                 
     FileHandling::print_column_names(outputFile);
     const auto parser = std::unique_ptr<Parser>(new Parser());
-    const std::function<void(int)> recurseTextSection ([&](int textBytes) {  // While there are still bytes, extract them, else close files and exit
+    const std::function<void(int)> recurseTextSection ([&](int textBytes) {  // While there are still bytes, extract them
         if (STILL_MORE_BYTES(textBytes)) recurseTextSection(textBytes-extractInfoToOutput(inputFile, outputFile, parser));
     });
-    while (!inputFile.eof()) recurseTextSection(FileHandling::locateTextSection(inputFile));
-    return FileHandling::close(inputFile, outputFile);  // Here we will actually call our lambda, which will execute bulk of program
+    while (!inputFile.eof()) recurseTextSection(FileHandling::locateTextSection(inputFile));  // Here we will actually call our lambda, which will execute bulk of program
+    return FileHandling::close(inputFile, outputFile); 
 }
