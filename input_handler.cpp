@@ -14,12 +14,15 @@
 #include <fstream>
 #include <iostream>
 #include <cstring>
+#include <regex>
 
 #define FILE_OPEN_FAILURE_MESSAGE "Failed to open file: " 
 #define TEXT_SECTION_IDENTIFIER 'T'
 #define NUM_ADDRESS_DESCRIPTION_BYTES 3
 #define LOOP_COUNTER_FINISH 0
 #define REMAINING_TEXT_SECTION_BYTES 0
+#define REGEX "T[0-9]{6}"
+std::regex reg(REGEX);
 
 namespace // Reading From Input
 {
@@ -73,6 +76,16 @@ int FileHandling::locateTextSection(std::ifstream& stream)
 {
     while (stream.peek() != TEXT_SECTION_IDENTIFIER)    // Read in lines until we see T
         readInLine(stream);
+    readInChar(stream);                                 // Grab 'T'
+    readInBytes(stream, NUM_ADDRESS_DESCRIPTION_BYTES); // Read in 3 descriptor bytes
+    return convertStringToHex(readInByte(stream));      // Read in next byte and return the size it indicates
+    // This will place you at beginning of instructions
+}
+
+int FileHandling::afterLocateTextSection(std::ifstream& stream)
+{
+    while (stream.peek() != TEXT_SECTION_IDENTIFIER && !stream.eof())    // Read in lines until we see T
+        readInChar(stream);
     readInChar(stream);                                 // Grab 'T'
     readInBytes(stream, NUM_ADDRESS_DESCRIPTION_BYTES); // Read in 3 descriptor bytes
     return convertStringToHex(readInByte(stream));      // Read in next byte and return the size it indicates
